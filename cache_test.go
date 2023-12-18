@@ -141,14 +141,14 @@ func TestStorePointerToStruct(t *testing.T) {
 	if !found {
 		t.Fatal("*TestStruct was not found for foo")
 	}
-	foo := x.(*TestStruct)
+	foo := x
 	foo.Num++
 
 	y, found := tc.Get("foo")
 	if !found {
 		t.Fatal("*TestStruct was not found for foo (second time)")
 	}
-	bar := y.(*TestStruct)
+	bar := y
 	if bar.Num != 2 {
 		t.Fatal("TestStruct.Num is not 2")
 	}
@@ -187,7 +187,7 @@ func TestDelete(t *testing.T) {
 	if found {
 		t.Error("foo was found, but it should have been deleted")
 	}
-	if x != nil {
+	if x != "" {
 		t.Error("x is not nil:", x)
 	}
 }
@@ -211,14 +211,14 @@ func TestFlush(t *testing.T) {
 	if found {
 		t.Error("foo was found, but it should have been deleted")
 	}
-	if x != nil {
+	if x != "" {
 		t.Error("x is not nil:", x)
 	}
 	x, found = tc.Get("baz")
 	if found {
 		t.Error("baz was found, but it should have been deleted")
 	}
-	if x != nil {
+	if x != "" {
 		t.Error("x is not nil:", x)
 	}
 }
@@ -230,7 +230,7 @@ func TestOnEvicted(t *testing.T) {
 		t.Fatal("tc.onEvicted is not nil")
 	}
 	works := false
-	tc.OnEvicted(func(k string, v interface{}) {
+	tc.OnEvicted(func(k string, v any) {
 		if k == "foo" && v.(int) == 3 {
 			works = true
 		}
@@ -395,7 +395,7 @@ func TestFileSerialization(t *testing.T) {
 	if !found {
 		t.Error("a was not found")
 	}
-	astr := a.(string)
+	astr := a
 	if astr != "aa" {
 		if astr == "a" {
 			t.Error("a was overwritten")
@@ -407,7 +407,7 @@ func TestFileSerialization(t *testing.T) {
 	if !found {
 		t.Error("b was not found")
 	}
-	if b.(string) != "b" {
+	if b != "b" {
 		t.Error("b is not b")
 	}
 }
