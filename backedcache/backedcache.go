@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/barrett370/go-cache/v2"
+	"github.com/barrett370/go-cache/v3"
 	"tailscale.com/util/singleflight"
 )
 

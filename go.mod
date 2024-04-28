@@ -1,4 +1,4 @@
-module github.com/barrett370/go-cache/v2
+module github.com/barrett370/go-cache/v3
 
 go 1.22.0
 
